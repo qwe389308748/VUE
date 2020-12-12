@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        {{ li }}
+    </div>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                liFamily:['李盼','李美婷','李小宝'],
+                li:{
+                    name:'李盼',
+                    age:18,
+                    son:'李小宝'
+                }
+            }
+        })
+
+        // vm.liFamily[3] = '李大宝'
+        // vm.liFamily.length = 0;
+        // vm.liFamily.push('李大宝')
+        // vm.$set(vm.liFamily,3,'李大宝')
+        // vm.$delete(vm.liFamily,3)
+
+
+        // vm.li.fiwle = '李美婷'
+        // delete vm.li
+        // vm.$set(vm.li, 'secondWife', '铁锤妹妹');
+        //  vm.$delete(vm.liFamily,'secondWife')
+
+
+
+        
+    </script>
+</body>
+</html>

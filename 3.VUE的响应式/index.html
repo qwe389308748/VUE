@@ -7,6 +7,52 @@
     <script src="./vue.js"></script>
 </head>
 <body>
-    
+    <div id="app">
+        {{ mas }}
+    </div>
+    <script>
+        const vm  = new Vue({
+            el:'#app',
+            data:{
+                mas:'加油 努力',
+                mrLi:{
+                    name:'李盼',
+                    age:18,
+                    height:"180cm",
+                    wife:'李美婷'
+                }
+            }
+        })
+        // vm.mrLi.wife.age = 20;
+        // vm.mas = '又是一年了'
+
+
+        // vm.mas = '手如柔荑';
+        // console.log(vm.mas, vm.$el.innerText);
+        // vm.mas = '肤如凝脂';
+        // console.log(vm.mas, vm.$el.innerText);
+        // vm.mas = '唇红齿白';
+        // console.log(vm.mas, vm.$el.innerText);
+
+
+
+        // vm.mas = '手如柔荑';
+        // vm.$nextTick(()=>{
+        //     console.log(vm.mas, vm.$el.innerText);
+        // })
+
+        // vm.mas = '手如柔荑';
+        // Vue.nextTick(()=>{
+        //     console.log(vm.mas, vm.$el.innerText);
+        // })
+
+
+        // setTimeout(() => {
+        //     console.log('timeout');
+        // }, 0)  
+        // Promise.resolve().then(() => {
+        //     console.log('promise');
+        // })
+    </script>
 </body>
 </html>
