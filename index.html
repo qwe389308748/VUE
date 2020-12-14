@@ -4,8 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="./vue.js"></script>
 </head>
 <body>
-    <script src="./vue.js"></script>
+    <!-- <div id="app" v-pre>
+        {{ mas }}
+    </div> -->
+
+
+
+    <!-- <div id="app" v-cloak>
+        {{ mas }}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+
+
+
+ 
+    <!-- <div id="app">
+        <span> {{ mas }} </span>
+        <span v-once> {{ mas1 }} </span>
+    </div>
+
+    <script>
+        const vm  = new Vue({
+            el:'#app',
+            data:{
+                mas:'今天天气还是不错的呀',
+                mas1:'今天下雨了'
+            }
+        })
+        vm.mas1 = '下雪了'
+    </script> -->
+
+
+
+
+
+    <!-- <div id="app">
+        <span v-text="mas"></span>
+        <span>---{{ mas }}---</span>
+    </div>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                mas:'显示文本'
+            }
+        })
+    </script> -->
+
+
+
+
+
+
+    <!-- <div id="app" v-html="ht"></div>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                ht:'{{ mas }}',
+                mas:'下雨了'
+            }
+        })
+    </script> -->
+
+
+    <input type="text">
+    <button>点击</button>
+  
+    <div id="app">
+      
+      <div v-html="msg"></div>
+    </div>
+  
+    <script>
+     const oInput = document.getElementsByTagName('input')[0];
+     const oButton = document.getElementsByTagName('button')[0];
+     let msg = null;
+     
+  
+     
+  
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'hello world'
+        }
+      })
+  
+      oButton.onclick = function () {
+       vm.msg = oInput.value;
+     }
+    </script>
 </body>
 </html>
