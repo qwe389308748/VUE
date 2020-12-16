@@ -7,81 +7,26 @@
     <script src="./vue.js"></script>
 </head>
 <body>
-    <!-- <div id="app">
-        <div  v-if="type=== 'd' ">{{ mas }}</div>
-        <div  v-if="type=== 'c' ">{{ mas1 }}</div>
-    </div>
-    <script>
-        const vm = new Vue({
-            el:'#app',
-            data:{
-                type:'c',
-                mas:'123456',
-                mas1:'789101112'
-            }
-        })
-    </script> -->
-
-
-
-
-
-
-    <!-- <div id="app">
-        <template v-if="ok">
-            <h1>Title</h1>
-            <p>Paragraph 1</p>
-            <p>Paragraph 2</p>
-        </template>
-        <template v-if="ok">
-            <h1>fuck</h1>
-            <p>no.1</p>
-            <p>no.2</p>
-        </template>
-    </div>
-    <script>
-        const vm = new Vue({
-            el:'#app',
-            data:{
-                ok:''
-            }
-        })
-    </script> -->
-
-    
-    
-    
-    
-    
-    
-    
-    
     <div id="app">
-        <div v-if="type === 'A'">
-            A
-          </div>
-          <div v-else>
-            Not A/B/C
-          </div>
-          <div v-else-if="type === 'B'">
-            B
-          </div>
-          <div v-else-if="type === 'C'">
-            C
-          </div>
-
-
-          <div v-show="s">
-              B
-          </div>
+        <!-- <button v-on:click="mas+=1">点击+1</button> -->
+        <!-- <button v-on:click="addMas(5,$event)">点击</button> -->
+        <!-- <button v-on:[ev]="addMas(5,$event)">点击</button> -->
+        <button @click="addMas(5,$event)">点击</button>
+        <div>被点击了{{ mas }}次</div>
     </div>
-      <script>
-        const vm = new Vue({
+    <script>
+       const vm =  new Vue({
             el:'#app',
             data:{
-                type:'A',
-                s:'a'
-            }
+                mas:0,
+                ev:'click'
+            },
+            methods: {
+                addMas(mun,e){
+                    this.mas+=mun;
+                    console.log(e.target)
+                }
+            },
         })
     </script>
 </body>
