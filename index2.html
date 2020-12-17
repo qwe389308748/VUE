@@ -11,36 +11,37 @@
     <div id="app">
         <!-- 筛选部分 -->
         <div class="goods" v-for="(itme,itmeIndex) in goodsList" :key="itme.id">
-             <div class="title">{{ itme.title }}:</div>
-             <ul class="type-list">
-                 <li class="type" 
-                 :class="{active : typeIndex===itme.index}" 
-                 v-for="(type,typeIndex) in itme.typeList" 
-                 :key="type"
-                 @click="Hclick(typeIndex,itme,type,itmeIndex)"
-                 >
-                     {{ type }}
-                  </li>
-             </ul>
+            <div class="title">{{ itme.title }}</div>
+            <ul class="type-list">
+                <li class="type" 
+                :class="{active : typeIndex===itme.index}" 
+                v-for="(type,typeIndex) in itme.typeList" 
+                :key="type"
+                @click="tj(type,typeIndex,itme,itmeIndex)"
+                >
+                    {{ type }}
+                </li>
+            </ul>
         </div>
 
-        <!-- 筛选后的部分 -->
+
+
+
+                <!-- 选中部分 -->
         <div class="choose-type">
             <div>已选条件:</div>
-            <span v-if="!boo">没有筛选条件</span>
-            <ul class="filter-list" v-else>
-                <li v-for="(listType,listKey) in list">
-                    {{ listType }}
-                    <span class="delete-goods" @click="de(listKey)">x</span>
+            <span  v-if="!boo">没有筛选条件</span>
+            <ul class="filter-list">
+                <li v-for="(type,typein) in list">
+                    {{ type }}
+                    <span class="delete-goods" @click="de(typein)">x</span>
                 </li>
-                
             </ul>
         </div>
     </div>
-
     <script>
         const vm = new Vue({
-            el:"#app",
+            el:'#app',
             data:{
                 goodsList: [
                     {
@@ -63,24 +64,25 @@
                 boo:false
             },
             methods: {
-                Hclick(typeIndex,itme,type,itmeIndex){
-                    this.boo = true
+                tj(type,typeIndex,itme,itmeIndex){
+                    if(type==='全部'){
+                        return
+                    }
+                    console.log(type,typeIndex,itme,itmeIndex);
                     itme.index = typeIndex
                     vm.$set(this.list,itmeIndex,type)
-                    // this.list.push(type)
                 },
-                de(listKey){
-                    vm.$delete(this.list,listKey)
-                    this.goodsList[listKey].index=0;
+                de(typein){
+                    vm.$delete(this.list,typein)
+                    this.goodsList[typein].index=0;
                     this.chang()
                 },
                 chang(){
                     const obj = JSON.stringify(this.list);
-                    this.boo=obj !=='{}';
+                    
                 }
             },
         })
-
         vm.goodsList.forEach(time => {
             vm.$set(time,'index',0)
         });
