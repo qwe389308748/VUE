@@ -8,25 +8,108 @@
 </head>
 <body>
     <div id="app">
-        <!-- <button v-on:click="mas+=1">点击+1</button> -->
-        <!-- <button v-on:click="addMas(5,$event)">点击</button> -->
-        <!-- <button v-on:[ev]="addMas(5,$event)">点击</button> -->
-        <button @click="addMas(5,$event)">点击</button>
-        <div>被点击了{{ mas }}次</div>
+        <ul>
+            <!-- <li v-for="(arrs,index) in arr">
+                {{ arrs.name}}--{{ index }}
+                {{ arrs.age }}--{{ index }}
+            </li> -->
+
+
+
+            <!-- <li v-for="(arrs,key,index) of obj">
+                {{ arrs }}
+                {{ key }}
+                {{ index }}
+            </li> -->
+
+
+
+            <!-- <li v-for="arr in num">
+                {{ arr }}
+            </li> -->
+
+
+
+
+            <!-- <li v-for="itme in name">
+                {{ itme }}
+            </li> -->
+
+
+
+            <!-- <template v-for="itme in per">
+                <li>{{ itme }}</li>
+                <li>哈哈</li>
+            </template> -->
+
+
+
+
+            <!-- <li v-for="(itme,index) in arr">
+                {{ itme.name }}
+                <input type="text" name="" id="">
+                <button @click="sj(index)">点击</button>
+            </li> -->
+
+
+
+
+
+            <!-- <button @click="rs">点击</button>
+            <li v-for="(itme,index) in arr" :key="index">
+                {{ itme.name }}
+            </li> -->
+
+
+
+
+
+
+
+            <!-- <button @click="ow = !ow">{{ ow ? '显示' : '隐藏'}}</button>
+            <input type="text" name="" id="" v-if="ow" key="b">
+            <input type="text" name="" id="" v-else key="a"> -->
+
+
+
+
+
+
+            
+        </ul>
     </div>
     <script>
-       const vm =  new Vue({
+        const vm = new Vue({
             el:'#app',
             data:{
-                mas:0,
-                ev:'click'
+                arr:[
+                    { name: '杉杉', age: 18 },
+                    { name: '思彤哥', age: 20 },
+                    { name: '成哥', age: 22 },
+                    { name: '邓哥', age: 88 },
+                ],
+                obj:{
+                    name: '杉',
+                    age: 18,
+                    height: '163cm'
+                },
+                num:10,
+                name:'shangshang',
+                per: ['shan', 'jc', 'cst', 'deng'],
+                ow:true
             },
             methods: {
-                addMas(mun,e){
-                    this.mas+=mun;
-                    console.log(e.target)
-                }
+                sj(index){
+                    const pe = this.arr.splice(index,1)
+                    console.log(pe)
+                    // this.arr.splice(index+1,0,pe)
+                    console.log(this.arr)
+                },
+                rs(){
+                    this.arr.reverse()
+                },
             },
+
         })
     </script>
 </body>
