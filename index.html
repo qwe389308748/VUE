@@ -5,95 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./vue.js"></script>
-    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div id="app">
-        <!-- 头部 -->
-        <div class="header">
-            <div class="container">
-                <div class="logo">toDoList</div>
-                <div class="input-area">
-                    <input type="text" @input="handInput" :value="sj">
-                    <button @click="addMask">添加</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 正在进行部分 -->
-        <div class="container">
-            <h2>
-                <span>正在进行</span>
-                <span class="mask-num">{{ mas.length }}</span>
-            </h2>
-            <ul class="mask-list">
-                <li v-for="(mask,index) in mas"
-                :key="mask.id"
-                >
-                    <div>
-                        <input type="checkbox" name="" id=""  @click="chang(index,'zz')">
-                        <span>{{ mask.title }}</span>
-                    </div>
-                    <button @click="del(index,'zz')">删除</button>
-                </li>
-            </ul>
-        </div>
+        <!-- <input type="text" v-model="msg"> -->
+        <!-- <input type="text" @input="msg=$event.target.value" :value="msg"> -->
 
 
-        <!-- 完成部分 -->
-        <div class="container">
-            <h2>
-                <span>已经完成</span>
-                <span class="mask-num">{{ com.length }}</span>
-            </h2>
-            <ul class="mask-list complete-list">
-                <li v-for="(cot,index) in com">
-                    <div>
-                        <input type="checkbox" @click="chang(index,'wc')">
-                        <span>{{ cot.title }}</span>
-                        <button @click="del(index)">删除</button>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        <!-- <input type="checkbox" v-model="checked" /> -->
+
+        
+        
+        
+        <!-- <input type="checkbox" id="cheng" value="成哥" v-model="checkedList">
+        <label for="cheng">成哥</label>
+
+        <input type="checkbox" id="tong"  value="思彤哥" v-model="checkedList">
+        <label for="tong">思彤哥</label>
+
+        <input type="checkbox" id="deng" value="邓哥" v-model="checkedList">
+        <label for="deng">邓哥</label>
+        <span v-for="ch in checkedList">被选中的人有: {{ ch }}</span> -->
+
+
+        <!-- <input type="radio" id="cheng" value="成哥" v-model="pack">
+        <label for="cheng">成哥</label>
+        <input type="radio" id="deng" value="邓哥" v-model="pack">
+        <label for="deng">邓哥</label>
+        <input type="radio" id="tong" value="思彤哥" v-model="pack">
+        <label for="tong">思彤哥</label> -->
+
+
+
+
+        <!-- <textarea v-model="message"></textarea>
+        <p >多行文本为：{{ message }}</p> -->
+
+
+
+    <select v-model="select">
+      <option value="请选择" disabled>请选择</option>
+      <option value="成哥">成哥</option>
+      <option value="邓哥">邓哥</option>
+      <option value="思彤哥">思彤哥</option>
+    </select>
+    <span>选择: {{ select === '请选择' ? '' : select }}</span>
     </div>
-
 
 
     <script>
         const vm = new Vue({
             el:'#app',
             data:{
-                mas:[],
-                sj:'',
-                com:[]
+                msg: 'hello world',
+                checked:'asdas',
+                checkedList:[],
+                pack:'',
+                message:'',
+                select: '请选择',
+                selectList:[]
             },
             methods: {
-                handInput(e){
-                    this.sj = e.target.value;                 
-                },
-                addMask(){
-                    if(this.sj===''){return}
-                    // console.log('CNM')
-                    this.mas.push({
-                        title:this.sj,
-                        id:Math.random()
-                    })
-                    this.sj=''
-                },
-                chang(index,type){
-                    if(type==='zz'){
-                        const comm = this.mas.splice(index,1);
-                        this.com.push(...comm)
-                    }else if(type==='wc'){
-                        const wc = this.com.splice(index,1)
-                        this.mas.push(...wc)
-                    }
-                },
-                del(index,type){
-                    const ddd = type==='zz'?this.mas : this.com;
-                    ddd.splice(index,1)
-                }
+                
             },
         })
     </script>
