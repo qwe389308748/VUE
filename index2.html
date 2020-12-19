@@ -10,47 +10,45 @@
   <body>
     <div id="app">
         <div class="area" v-for="area in 2">
-            <h2>{{ area===1 ? '提问区':'答案区' }}</h2>
-            <ul> 
+            <h2>{{ area === 1? '提问区':'答案区' }}</h2>
+            <ul>
                 <li v-for="(item, index) in questionList" :key="item.id">
                     <h3>{{ item.title }}</h3>
 
+
                     <!-- 简答区 -->
-                    <div v-if="item.type==='short'">
-                        <input v-if="area===1" type="text" v-model="item.answer">
+                    <div v-if=" item.type==='short' ">
+                        <input type="text" v-if="area === 1" v-model.lazy.trim="item.answer">
                         <span v-else>{{ item.answer }}</span>
                     </div>
 
 
-                    <!-- 单选按钮 -->
-                    <div v-else-if="item.type==='single'">
-                       <template v-if="area===1">
-                           <div v-for="cons in item.chooseList" :key="cons">
-                               <input type="radio" :value="cons" v-model="item.answer">
-                               <span>{{ cons }}</span>
-                           </div>
-                       </template>
-                       <span v-else>{{ item.answer }}</span>
+                    <!-- 单选区 -->
+                    <div v-else-if=" item.type==='single' ">
+                        <template v-if="area === 1">
+                            <div v-for="(cons, index) in item.chooseList" :key="cons">
+                                <input type="radio" :value="cons" v-model="item.answer">
+                                <span>{{ cons }}</span>
+                            </div>
+                        </template>
+                         <span v-else>{{ item.answer }}</span>
                     </div>
 
 
-
-                    
-                    
-                    <!-- 多选题 -->
-                    <div v-else-if="item.type==='multiple'">
-                        <template v-if="area===1">
-                            <div v-for="(chons, index) in item.chooseList" :key="chons">
-                                <input type="checkbox" :value="chons" v-model="item.answer">
-                                <span>{{ chons }}</span>
+                    <!-- 多选区 -->
+                    <div v-else-if=" item.type==='multiple' ">
+                        <template v-if="area === 1">
+                            <div v-for="(chec, index) in item.chooseList" :key="chec">
+                                <input type="checkbox" :value="chec" v-model="item.answer">
+                                <span>{{ chec }}</span>
                            </div>
                         </template>
-                        <span v-else>{{ item.answer && item.answer.toString() }}</span>
+                        <span v-else>{{ item.answer.toString() }}</span>
                     </div>
 
 
 
-                    <!-- 问答题 -->
+                    <!-- 问答区 -->
                     <div v-if="item.type==='long'">
                         <textarea v-if="area===1" v-model.lazy="item.answer"></textarea>
                         <span v-else>{{ item.answer }}</span>
@@ -70,12 +68,14 @@
               title: "1.请问你的姓名是？",
               chooseList: null,
               id: 0,
+              answer:''
             },
             {
               type: "single",
               title: "2.请问您的性别是？",
               chooseList: ["男", "女", "保密"],
               id: 1,
+              answer:''
             },
             {
               type: "multiple",
@@ -89,14 +89,11 @@
               title: "4. 请介绍一下自己:",
               chooseList: null,
               id: 3,
+              answer:''
             },
           ],
         },
-      })
-      vm.questionList.forEach(itme=>{
-          const answer = itme.type==='multiple'?[]:'';
-          vm.$set(itme,'answer',answer)
-      })
+      });
     </script>
   </body>
 </html>
