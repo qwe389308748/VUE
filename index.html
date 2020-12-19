@@ -5,85 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./vue.js"></script>
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div id="app">
-        <!-- 筛选部分 -->
-        <div class="goods" v-for="(itme,itmeIndex) in goodsList" :key="itme.id">
-             <div class="title">{{ itme.title }}:</div>
-             <ul class="type-list">
-                 <li class="type" 
-                 :class="{active : typeIndex===itme.index}" 
-                 v-for="(type,typeIndex) in itme.typeList" 
-                 :key="type"
-                 @click="Hclick(typeIndex,itme,type,itmeIndex)"
-                 >
-                     {{ type }}
-                  </li>
-             </ul>
+        <!-- 头部 -->
+        <div class="header">
+            <div class="container">
+                <div class="logo">toDoList</div>
+                <div class="input-area">
+                    <input type="text" @input="handInput" :value="sj">
+                    <button @click="addMask">添加</button>
+                </div>
+            </div>
         </div>
 
-        <!-- 筛选后的部分 -->
-        <div class="choose-type">
-            <div>已选条件:</div>
-            <span v-if="!boo">没有筛选条件</span>
-            <ul class="filter-list" v-else>
-                <li v-for="(listType,listKey) in list">
-                    {{ listType }}
-                    <span class="delete-goods" @click="de(listKey)">x</span>
+        <!-- 正在进行部分 -->
+        <div class="container">
+            <h2>
+                <span>正在进行</span>
+                <span class="mask-num">{{ mas.length }}</span>
+            </h2>
+            <ul class="mask-list">
+                <li v-for="(mask,index) in mas"
+                :key="mask.id"
+                >
+                    <div>
+                        <input type="checkbox" name="" id=""  @click="chang(index,'zz')">
+                        <span>{{ mask.title }}</span>
+                    </div>
+                    <button @click="del(index,'zz')">删除</button>
                 </li>
-                
+            </ul>
+        </div>
+
+
+        <!-- 完成部分 -->
+        <div class="container">
+            <h2>
+                <span>已经完成</span>
+                <span class="mask-num">{{ com.length }}</span>
+            </h2>
+            <ul class="mask-list complete-list">
+                <li v-for="(cot,index) in com">
+                    <div>
+                        <input type="checkbox" @click="chang(index,'wc')">
+                        <span>{{ cot.title }}</span>
+                        <button @click="del(index)">删除</button>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
 
+
+
     <script>
         const vm = new Vue({
-            el:"#app",
+            el:'#app',
             data:{
-                goodsList: [
-                    {
-                        title: '上装',
-                        typeList: ['全部', '针织衫', '毛呢外套', 'T恤', '羽绒服', '棉衣', '卫衣', '风衣' ],
-                        id: 1,
-                    },
-                    {
-                        title: '裤装',
-                        typeList: ['全部', '牛仔裤', '小脚/铅笔裤', '休闲裤' ,'打底裤', '哈伦裤'],
-                        id: 2,
-                    },
-                    {
-                        title: '裙装',
-                        typeList: ['全部', '连衣裙', '半身裙', '长袖连衣裙', '中长款连衣裙'],
-                        id: 3,
-                    }
-                ],
-                list:{},
-                boo:false
+                mas:[],
+                sj:'',
+                com:[]
             },
             methods: {
-                Hclick(typeIndex,itme,type,itmeIndex){
-                    this.boo = true
-                    itme.index = typeIndex
-                    vm.$set(this.list,itmeIndex,type)
-                    // this.list.push(type)
+                handInput(e){
+                    this.sj = e.target.value;                 
                 },
-                de(listKey){
-                    vm.$delete(this.list,listKey)
-                    this.goodsList[listKey].index=0;
-                    this.chang()
+                addMask(){
+                    if(this.sj===''){return}
+                    // console.log('CNM')
+                    this.mas.push({
+                        title:this.sj,
+                        id:Math.random()
+                    })
+                    this.sj=''
                 },
-                chang(){
-                    const obj = JSON.stringify(this.list);
-                    this.boo=obj !=='{}';
+                chang(index,type){
+                    if(type==='zz'){
+                        const comm = this.mas.splice(index,1);
+                        this.com.push(...comm)
+                    }else if(type==='wc'){
+                        const wc = this.com.splice(index,1)
+                        this.mas.push(...wc)
+                    }
+                },
+                del(index,type){
+                    const ddd = type==='zz'?this.mas : this.com;
+                    ddd.splice(index,1)
                 }
             },
         })
-
-        vm.goodsList.forEach(time => {
-            vm.$set(time,'index',0)
-        });
     </script>
 </body>
 </html>
