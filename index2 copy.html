@@ -11,28 +11,25 @@
     <div id="app">
       <!-- 头部导航 -->
       <div class="control">
-        <input type="text" class="search" v-model="filterText" />
-        <div>
-          <span
-            class="option"
-            :class="{'active':optionActive[index]}"
-            v-for="(option,index) in controlOptions"
-            @click="filterBySex(index,option)"
-          >
-            {{ option }}
-          </span>
-        </div>
+        <input type="text" class="search" v-model="filterText"/>
+        <span class="option"
+        v-for="(cont,index) in controlOptions"
+        @click="filterBySex(index,cont)"
+        :class="{'active':optionActive[index]}"
+        >
+        {{ cont }}
+      </span>
       </div>
 
-      <!-- 内容 -->
+      <!-- 内容区域 -->
       <ul>
-        <li class="person" v-for="person in personList" :key="person.id">
+        <li class="person" v-for="itme in personList" :key="itme.id">
           <div class="avatar">
-            <img :src="person.src" :alt="person.src" />
+            <img :src="itme.src" :alt="itme.des" />
           </div>
           <div class="content">
-            <span class="name">{{ person.name }}</span>
-            <span class="des">{{ person.des }}</span>
+            <span class="name">{{ itme.name }}</span>
+            <span class="des">{{ itme.des }}</span>
           </div>
         </li>
       </ul>
@@ -45,7 +42,6 @@
           filterText: "",
           controlOptions: ["Male", "Female", "All"],
           optionActive: [false, false, true],
-          addClassFlag: false,
           sex: ["m", "f"],
           personArr: [
             {
@@ -90,19 +86,25 @@
             },
           ],
         },
+        computed:{
+          personList(){
+            const { personArr, filterText,sex } = this;
+            return personArr.filter((itme) => itme.name.includes(filterText)&& sex.includes(itme.sex));
+          }
+        },
         methods: {
-          filterBySex(index, option) {
-            if (this.optionActive[index]) {
-              return;
+          filterBySex(index,cont){
+            if(this.optionActive[index]){
+              return
             }
-            for (let i = 0; i < this.optionActive.length; i++) {
-              this.optionActive[i] = false;
+            for(let i=0;i<this.optionActive.length;i++){
+              this.optionActive[i]=false
             }
-            this.optionActive.splice(index, 1, true);
+            this.optionActive.splice(index,1,true)
 
-            this.sex.length = 0;
+            this.sex.length = 0
 
-            switch (option) {
+            switch (cont) {
               case "Male":
                 this.sex.push("m");
                 break;
@@ -112,13 +114,7 @@
               case "All":
                 this.sex.push("m", "f");
             }
-          },
-        },
-        computed: {
-          personList() {
-            const { personArr, filterText,sex } = this;
-            return personArr.filter((itme) => itme.name.includes(filterText)&&sex.includes(itme.sex));
-          },
+          }
         },
       });
     </script>

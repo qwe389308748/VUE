@@ -1,102 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./vue.js"></script>
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
+</head>
+<body>
     <div id="app">
-        <div class="area" v-for="area in 2">
-            <h2>{{ area===1 ? '提问区':'答案区' }}</h2>
-            <ul> 
-                <li v-for="(item, index) in questionList" :key="item.id">
-                    <h3>{{ item.title }}</h3>
+        <!-- {{ msg.split('').reverse().join('') }} -->
 
-                    <!-- 简答区 -->
-                    <div v-if="item.type==='short'">
-                        <input v-if="area===1" type="text" v-model="item.answer">
-                        <span v-else>{{ item.answer }}</span>
-                    </div>
+        <br>
 
-
-                    <!-- 单选按钮 -->
-                    <div v-else-if="item.type==='single'">
-                       <template v-if="area===1">
-                           <div v-for="cons in item.chooseList" :key="cons">
-                               <input type="radio" :value="cons" v-model="item.answer">
-                               <span>{{ cons }}</span>
-                           </div>
-                       </template>
-                       <span v-else>{{ item.answer }}</span>
-                    </div>
-
-
-
-                    
-                    
-                    <!-- 多选题 -->
-                    <div v-else-if="item.type==='multiple'">
-                        <template v-if="area===1">
-                            <div v-for="(chons, index) in item.chooseList" :key="chons">
-                                <input type="checkbox" :value="chons" v-model="item.answer">
-                                <span>{{ chons }}</span>
-                           </div>
-                        </template>
-                        <span v-else>{{ item.answer && item.answer.toString() }}</span>
-                    </div>
-
-
-
-                    <!-- 问答题 -->
-                    <div v-if="item.type==='long'">
-                        <textarea v-if="area===1" v-model.lazy="item.answer"></textarea>
-                        <span v-else>{{ item.answer }}</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        {{ someComputed }}
     </div>
 
     <script>
-      const vm = new Vue({
-        el: "#app",
-        data: {
-          questionList: [
-            {
-              type: "short",
-              title: "1.请问你的姓名是？",
-              chooseList: null,
-              id: 0,
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                msg: 'hello，你好呀，我是杉杉',
             },
-            {
-              type: "single",
-              title: "2.请问您的性别是？",
-              chooseList: ["男", "女", "保密"],
-              id: 1,
+            methods: {
+                
             },
-            {
-              type: "multiple",
-              title: "3. 请选择您的兴趣爱好：",
-              chooseList: ["看书", "游泳", "跑步", "看电影", "听音乐"],
-              answer: [],
-              id: 2,
-            },
-            {
-              type: "long",
-              title: "4. 请介绍一下自己:",
-              chooseList: null,
-              id: 3,
-            },
-          ],
-        },
-      })
-      vm.questionList.forEach(itme=>{
-          const answer = itme.type==='multiple'?[]:'';
-          vm.$set(itme,'answer',answer)
-      })
+            computed:{
+                someComputed(){
+                    return this.msg.split('').reverse().join('')
+                }
+            }
+        })
     </script>
-  </body>
+</body>
 </html>
