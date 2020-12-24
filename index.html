@@ -1,35 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="./vue.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="app">
-        <!-- {{ msg.split('').reverse().join('') }} -->
-
-        <br>
-
-        {{ someComputed }}
+        <!-- {{ Obj }}
+        {{ mas }} -->
+            {{ fallName }}
     </div>
 
     <script>
-        const vm = new Vue({
-            el:'#app',
-            data:{
-                msg: 'hello，你好呀，我是杉杉',
-            },
-            methods: {
-                
-            },
-            computed:{
-                someComputed(){
-                    return this.msg.split('').reverse().join('')
-                }
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          mas: "你好呀",
+          Obj: {
+            name: "邓旭明",
+            age: 88,
+          },
+          fisrtName: "邓",
+          lastName: "旭明",
+          fullName: "邓旭明",
+          name: "shanshan",
+        },
+        computed:{
+            fallName(){
+                return this.fisrtName + this.lastName
             }
-        })
+        },
+        methods: {
+          chang() {
+            console.log("今天天气还可以");
+          },
+        },
+        // watch: {
+        //   // mas(value1,value2){
+        //   //     console.log(value1,value2)
+        //   // }
+
+        //   // mas:'chang'
+
+        // //   Obj: {
+        // //     handler() {
+        // //       console.log("Obj的值改变了");
+        // //     },
+        // //     deep:true,
+        // //     immediate:true
+        // //   },
+        // },
+      });
+
+      //   vm.$watch('mas',function(value1,value2){
+      //     console.log(value1,value2)
+      //   },{
+
+      //   })
+
+      // vm.$watch('Obj',{
+      //     handler(){
+      //         console.log('Obj的值改变了')
+      //     },
+      //     deep:true
+      // })
+
+
+    //   vm.$watch(function(){
+    //       return this.mas + this.Obj.name
+    //   },{
+    //     handler () {
+    //     console.log('值改变了')
+    //     },
+    //     deep:true,
+    //   })
+
+
+
+    // const abc = vm.$watch('mas',function(){
+    //     console.log('被执行了')
+    // })
+    // abc()
+
+
+    // var abc = vm.$watch('mas',function(){
+    //     if(abc){
+    //         console.log('xxxx');
+    //         abc()
+    //     }
+    //     console.log('mas的值被改变了')
+    // },{
+    //     immediate:true
+    // })
     </script>
-</body>
+  </body>
 </html>
