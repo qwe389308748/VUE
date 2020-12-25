@@ -4,96 +4,75 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
     <script src="./vue.js"></script>
+    <script src="./axios.js"></script>
   </head>
   <body>
     <div id="app">
-        <!-- {{ Obj }}
-        {{ mas }} -->
-            {{ fallName }}
+      <div class="username">
+        <input type="text" placeholder="用户名" v-model="name" />
+      </div>
+      <div class="mail">
+        <input type="text" placeholder="邮箱" v-model="mail" />
+      </div>
+
+      <div class="upload-btn" @click="handleUpload">上传</div>
+      <div class="show-btn" @click="handleShow">显示人物信息</div>
+      <ul class="person-list" v-if="personList.length">
+        <li class="person" v-for="itme in personList">
+          <span>{{ itme.name }}</span>
+          <span>{{ itme.mail }}</span>
+        </li>
+      </ul>
     </div>
 
     <script>
       const vm = new Vue({
         el: "#app",
         data: {
-          mas: "你好呀",
-          Obj: {
-            name: "邓旭明",
-            age: 88,
-          },
-          fisrtName: "邓",
-          lastName: "旭明",
-          fullName: "邓旭明",
-          name: "shanshan",
-        },
-        computed:{
-            fallName(){
-                return this.fisrtName + this.lastName
-            }
+          name: "",
+          mail: "",
+          msg: "",
+          personList: [],
         },
         methods: {
-          chang() {
-            console.log("今天天气还可以");
+          handleUpload() {
+            const { name, mail } = this;
+              if(!name || !mail){
+                  alert('请输入姓名和邮箱')
+                  return 
+              }           
+            axios
+              .post("https://developer.duyiedu.com/vue/setUserInfo", {
+                name,
+                mail,
+              })
+              .then((resp) => {
+                this.msg = resp.data.msg;
+              });
+          },
+          handleShow() {
+            axios
+              .get("https://developer.duyiedu.com/vue/getUserInfo")
+              .then((resp) => {
+                 resp.data.data.length = 5
+                 this.personList = resp.data.data;
+              });
           },
         },
-        // watch: {
-        //   // mas(value1,value2){
-        //   //     console.log(value1,value2)
-        //   // }
-
-        //   // mas:'chang'
-
-        // //   Obj: {
-        // //     handler() {
-        // //       console.log("Obj的值改变了");
-        // //     },
-        // //     deep:true,
-        // //     immediate:true
-        // //   },
-        // },
+        watch: {
+          msg() {
+            if (this.msg === "") {
+              return;
+            }
+            alert(this.msg);
+            this.msg = "";
+            this.name='',
+            this.mail=''
+          },
+        },
       });
-
-      //   vm.$watch('mas',function(value1,value2){
-      //     console.log(value1,value2)
-      //   },{
-
-      //   })
-
-      // vm.$watch('Obj',{
-      //     handler(){
-      //         console.log('Obj的值改变了')
-      //     },
-      //     deep:true
-      // })
-
-
-    //   vm.$watch(function(){
-    //       return this.mas + this.Obj.name
-    //   },{
-    //     handler () {
-    //     console.log('值改变了')
-    //     },
-    //     deep:true,
-    //   })
-
-
-
-    // const abc = vm.$watch('mas',function(){
-    //     console.log('被执行了')
-    // })
-    // abc()
-
-
-    // var abc = vm.$watch('mas',function(){
-    //     if(abc){
-    //         console.log('xxxx');
-    //         abc()
-    //     }
-    //     console.log('mas的值被改变了')
-    // },{
-    //     immediate:true
-    // })
     </script>
   </body>
 </html>

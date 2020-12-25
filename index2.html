@@ -1,66 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="./index.css" />
     <script src="./vue.js"></script>
-    <script src="./jquery.js"></script>
-</head>
-<body>
+    <script src="./axios.js"></script>
+  </head>
+  <body>
     <div id="app">
-        <div class="logo">
-            <img src="https://www.baidu.com/img/bd_logo1.png?where=super" title="点击一下，了解更多">
-        </div>
+      <div class="username">
+        <input type="text" placeholder="用户名" v-model="name" />
+      </div>
+      <div class="mail">
+        <input type="text" placeholder="邮箱" v-model="mail" />
+      </div>
 
-        <div class="search-box">
-            <span class="search-area">
-                <input type="text" 
-                maxlength="100" 
-                v-model="inputVal"
-                @focus="() => inputFocus = true"
-                @blur="() => inputFocus = false"
-                >
-                <span class="icon icon-paizhao"></span>
-            </span>
-            <span class="search-btn">百度一下</span>
-        </div>
-
-        <ul class="search-list" v-show="inputFocus && arr.length">
-            <li v-for="(item, index) in arr" :key="item">{{ item }}</li>
-        </ul>
+      <div class="upload-btn" @click="handleUpload">上传</div>
+      <div class="show-btn" @click="handleShow">显示人物信息</div>
+      <button @click="handleCancelGet">取消get请求</button>
+      <ul class="person-list" v-if="personList.length">
+        <li class="person" v-for="itme in personList">
+          <span>{{ itme.name }}</span>
+          <span>{{ itme.mail }}</span>
+        </li>
+      </ul>
     </div>
 
     <script>
-        const vm = new Vue({
-            el:'#app',
-            data:{
-                inputVal:'',
-                arr:[],
-                inputFocus: false,
-            },
-            methods: {
-                c(data){
-                    this.arr = data.s 
+      axios.defaults.baseURL = 'https://developer.duyiedu.com/vue';
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          name: "",
+          mail: "",
+          msg: "",
+          personList: [],
+        },
+        methods: {
+            handleUpload(){
+                let {name,mail} = this;
+                if(name==''||mail==''){
+                    return
                 }
+                axios.post('/setUserInfo',{
+                    name,mail
+                }).then(resp=>{
+                    this.msg = resp.data.msg
+                    console.log(resp)
+                })
             },
-            watch:{
-                inputVal(){
-                    if(this.inputVal===''){
-                        return
-                    }
-                    $.ajax({
-                        dataType:"jsonp",
-                        url:'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
-                        data:{
-                            wd:this.inputVal,
-                            cb:'vm.c'
-                        }
-                    })
-                }
+            handleShow(){
+                axios.get('/getUserInfo1',{
+                    cancelToken: source.token
+                }).then(resp=>{
+                    resp.length=5;
+                    console.log(resp)
+                    this.personList = resp
+                }).catch(err=>{
+                    // this.msg = err.message
+                    // console.log(err)
+                    console.log(err)
+
+                })
+            },
+            handleCancelGet(){
+                source.cancel('不请求了')
             }
-        })
+        },
+        watch: {
+        msg () {
+          if(this.msg === '') {
+            return;
+          }
+          alert(this.msg);
+          this.msg = '';
+          this.name='',
+          this.mail=''
+        }
+      }
+      });
+      
+      const a= axios.interceptors.request.use(resp=>{
+        alert('请求到数据了')
+        return resp
+      })
+
+
+      axios.interceptors.response.use(resp=>{
+        alert('拿到你的数据了嗷')
+        return resp.data.data
+      })
+
+      axios.interceptors.request.eject(a)
+
+
+      const source = axios.CancelToken.source();
     </script>
-</body>
+  </body>
 </html>
