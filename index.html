@@ -4,73 +4,92 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="index.css" />
     <script src="./vue.js"></script>
-    <script src="./axios.js"></script>
   </head>
   <body>
     <div id="app">
-      <div class="username">
-        <input type="text" placeholder="用户名" v-model="name" />
+      <div
+        @click="hand"
+        style="width: 50px; height: 50px; background-color: rebeccapurple"
+      >
+        {{ msg }}
       </div>
-      <div class="mail">
-        <input type="text" placeholder="邮箱" v-model="mail" />
-      </div>
-
-      <div class="upload-btn" @click="handleUpload">上传</div>
-      <div class="show-btn" @click="handleShow">显示人物信息</div>
-      <ul class="person-list" v-if="personList.length">
-        <li class="person" v-for="itme in personList">
-          <span>{{ itme.name }}</span>
-          <span>{{ itme.mail }}</span>
-        </li>
-      </ul>
     </div>
 
     <script>
       const vm = new Vue({
         el: "#app",
         data: {
-          name: "",
-          mail: "",
-          msg: "",
-          personList: [],
+          msg: "hello world",
         },
         methods: {
-          handleUpload() {
-            const { name, mail } = this;
-              if(!name || !mail){
-                  alert('请输入姓名和邮箱')
-                  return 
-              }           
-            axios
-              .post("https://developer.duyiedu.com/vue/setUserInfo", {
-                name,
-                mail,
-              })
-              .then((resp) => {
-                this.msg = resp.data.msg;
-              });
-          },
-          handleShow() {
-            axios
-              .get("https://developer.duyiedu.com/vue/getUserInfo")
-              .then((resp) => {
-                 resp.data.data.length = 5
-                 this.personList = resp.data.data;
-              });
+          hand() {
+            console.log("被点击了");
           },
         },
         watch: {
-          msg() {
-            if (this.msg === "") {
-              return;
-            }
-            alert(this.msg);
-            this.msg = "";
-            this.name='',
-            this.mail=''
+          msg: {
+            handler() {
+              console.log("xxx");
+            },
           },
+        },
+
+        beforeCreate() {
+          console.log("VUE程序开始了");
+          console.log(this.$el),
+            console.log(this.data),
+            console.log(this.methods),
+            console.log(this.watch);
+          this.timer = setInterval(() => {
+            console.log(1);
+          }, 1000);
+          console.log("----beforeCreate----");
+        },
+
+        created() {
+          console.log("初始化完成");
+          console.log(this.$el),
+            console.log(this.msg),
+            console.log(this.hand),
+            console.log("----created----");
+        },
+
+        beforeMount() {
+          console.log("挂载前");
+          console.log(this.$el);
+          console.log("-------beforeMount---------");
+        },
+
+        mounted() {
+          console.log("挂载之后");
+          console.log(this.$el);
+          console.log("-----------mounted-----------");
+        },
+
+        beforeUpdate() {
+          console.log("更改数据之后，渲染之前");
+          console.log(this.msg);
+          console.log(this.$el.outerHTML);
+          console.log("-----beforeUpdate----");
+        },
+
+        updated() {
+          console.log("更改渲染之后");
+          console.log(this.msg);
+          console.log(this.$el.outerHTML);
+          console.log("------updated------");
+        },
+
+        beforeDestroy() {
+          console.log("Vue示例销毁之前");
+          clearInterval(this.timer);
+          console.log("-----beforeDestroy----");
+        },
+
+        destroyed() {
+            console.log("Vue示例销毁之后");
+          console.log("-----destoryed-----");
         },
       });
     </script>
