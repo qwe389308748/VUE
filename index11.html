@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>混入</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <my-a></my-a>
+        <my-b></my-b>
+    </div>
+    
+
+    <script>
+        const minxin={
+            data(){
+                return {
+                    msg:"我又混进来了"
+                }
+            },
+            created() {
+                console.log('我是混进来的')
+            },
+        }
+
+
+        Vue.component("my-a",{
+            xxx:"xxx",
+            mixins:[minxin],
+            template:`
+            <div>{{ msg }}</div>
+            `,
+            data() {
+                return {
+                    msg:"滚"
+                }
+            },
+            created() {
+                console.log("你混不进来了")
+            },
+        })
+
+        Vue.component("my-b",{
+            mixins:[minxin],
+            template:`
+            <div>bb</div>
+            `
+        })
+
+        const vm =new Vue({
+            el:"#app",
+            data:{
+
+            }
+        })
+    </script>
+</body>
+</html>

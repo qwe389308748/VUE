@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>组件_Prop</title>
+    <script src="./vue.js"></script>
+    <script src="./axios.js"></script>
+    <link rel="stylesheet" href="./index2.css" />
+  </head>
+  <body>
+    <div id="app">
+        <!-- <video-itme v-for="video in videoList" :video="video"></video-itme> -->
+
+      <video-list :video-list="videoList"></video-list>
+    </div>
+
+    <script>
+      Vue.component('video-itme',{
+        props:['video'],
+        template:`
+        <div class="video-item" :key="video.id">
+          <div class="poster">
+            <img :src="video.poster" alt="">
+            <div class="info">
+              <div class="play">{{ video.play }}</div>
+              <div class="rank">{{ video.rank }}</div>
+             </div>
+          </div>
+          <div class="title">{{ video.title }}</div>  
+        </div>
+        `
+      })
+        const vm = new Vue({
+          el:'#app',
+          data:{
+            videoList: [],
+          },
+          created() {
+            axios.get('https://developer.duyiedu.com/vue/bz/video',{
+              params: {
+                start: 0,
+                offset: 12,
+              }
+            }).then(resp=>{
+              this.videoList = resp.data.data;
+            })
+          },
+        })
+    </script>
+  </body>
+</html>

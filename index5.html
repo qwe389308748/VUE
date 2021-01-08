@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>非Prop特性</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <my-cmp type="radio" />
+    </div>
+
+    <script>
+      Vue.component("my-cmp", {
+        inheritAttrs: false,
+        mounted() {
+          console.log(this.$attrs);
+        },
+        template: `
+            <label>
+                选择：
+                <input v-bind="$attrs" />
+            </label>
+            `,
+      });
+
+      const vm = new Vue({
+        el: "#app",
+        data: {},
+      });
+    </script>
+  </body>
+</html>

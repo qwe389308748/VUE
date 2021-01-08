@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>过滤器</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- {{ mas | filterA('a') | filterB }} -->
+
+        {{ mas|capitalize }}
+        {{ num|toMoney }}
+        {{ word|addWord }}
+    </div>
+
+    <script>
+
+        // Vue.filter('filterA',(value,a)=>{
+        //     console.log(value,a)
+        //     return value = '这是一个已经过滤的值'
+        // })
+
+        // Vue.filter('filterB',(value)=>{
+        //     console.log(value)
+        //     return value = '这是一个已经过滤了好几次的值'
+        // })
+
+
+        Vue.filter('capitalize',value=>{
+            if(!value){return};
+            return value.charAt(0).toUpperCase() + value.slice(1)
+        })
+
+        Vue.filter('toMoney',value=>{
+            if(!value){return};
+            return value.toLocaleString()
+        })
+
+        Vue.filter('addWord',value=>{
+            if(!value){return};
+            if(value>100000){
+                return (value/10000).toFixed(1)+ '万'
+            }
+            return value
+        })
+        const vm = new Vue({
+            el:"#app",
+            data:{
+                mas:'abcdefg',
+                num:789178945613213,
+                word:22
+            }
+        })
+    </script>
+</body>
+</html>

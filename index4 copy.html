@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件单向数据流</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 父组件:<button @click="count ++">{{ count }}</button>
+        子组件:<my-count :count="count"></my-count> -->
+
+        父组件:<button @click="arr.push(5)">{{ arr }}</button>
+        子组件:<my-count :arr="arr"></my-count>
+    </div>
+
+    <script>
+    Vue.component('my-count',{
+        props:{
+            count:Number,
+            arr:Array
+        },
+        data(){
+            return {
+                myarr:[...this.arr]
+            }
+        },
+        template:`
+        <button @click="myarr.push(5)">{{ myarr }}</button>
+        `,
+    })
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                count:0,
+                arr:[1,2,3,4]
+            }
+        })
+    </script>
+</body>
+</html>
