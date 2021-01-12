@@ -1,22 +1,29 @@
 <template>
-  <div>
-    xxx
-    {{ msg }}
-  </div>
+    <div class="app">
+        <DataPicker :date="date" @choose-date="chooseDate" />
+    </div>
 </template>
 
 <script>
+import DataPicker from "./DataPicker"
 export default {
+    components:{
+        DataPicker
+    },
     data(){
         return {
-            msg:"123456"
+            date:new Date()
         }
-    }
+    },
+    methods: {
+        chooseDate(date){
+            this.date = date
+        }
+    },
 }
 </script>
 
-<style>
-    div{
-        background-color: red;
-    }
+
+<style scoped>
+
 </style>
