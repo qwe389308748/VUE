@@ -1,4 +1,4 @@
-# vue-dom
+# vuedome
 
 ## Project setup
 ```

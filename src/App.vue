@@ -5,16 +5,12 @@
 </template>
 
 <script>
-import Dome from "./components/Dome-5.vue";
+import Dome from './components/Dome-3'
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
     Dome
   }
-};
+}
 </script>
-
-<style>
-
-</style>
